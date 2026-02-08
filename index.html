@@ -59,7 +59,36 @@ header h1, header p, .scroll-btn{
   background:rgba(255,255,255,.15);
 }
 
-/* CARRUSEL */
+/* SOBRE NOSOTROS */
+.sobre{background:rgba(255,255,255,.08)}
+.team{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  max-width:900px;
+  margin:0 auto;
+}
+.member{
+  background:white;
+  color:#333;
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
+}
+.avatar{
+  width:70px;height:70px;
+  border-radius:50%;
+  background:var(--primary);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  margin:0 auto 10px;
+}
+
+/* CARRUSELES */
 .carousel{
   position:relative;
   overflow:hidden;
@@ -72,7 +101,7 @@ header h1, header p, .scroll-btn{
   transition:transform .8s cubic-bezier(.4,0,.2,1);
 }
 
-.evento{
+.evento, .video-card{
   min-width:100%;
   background:white;
   color:#333;
@@ -90,10 +119,7 @@ header h1, header p, .scroll-btn{
   font-size:12px;
 }
 
-.evento h3{
-  color:var(--primary);
-  margin:15px 0 5px;
-}
+.evento h3{color:var(--primary);margin:15px 0 5px}
 
 .evento button{
   margin-top:15px;
@@ -111,30 +137,33 @@ header h1, header p, .scroll-btn{
   transition:max-height .6s ease, opacity .4s ease;
   opacity:0;
 }
+.detalle.activo{max-height:200px;opacity:1;margin-top:10px}
 
-.detalle.activo{
-  max-height:200px;
-  opacity:1;
-  margin-top:10px;
+/* VIDEOS */
+.video-card iframe{
+  width:100%;
+  height:360px;
+  border-radius:18px;
+  border:none;
 }
 
-/* MENSAJE TECLADO */
-.hint-teclado{
+/* MENSAJE */
+.hint-teclado{text-align:center;margin-bottom:15px;font-size:.95rem;opacity:.85}
+
+/* TEXTO ENTRE CARRUSELES */
+.separador{
+  padding:60px 20px;
   text-align:center;
-  margin-bottom:15px;
-  font-size:.95rem;
   opacity:.85;
 }
 
 /* CALENDARIO */
 .calendarios{background:rgba(0,0,0,.25)}
-
 .grid-cal{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:25px;
 }
-
 .mes{
   background:white;
   color:#333;
@@ -142,16 +171,13 @@ header h1, header p, .scroll-btn{
   padding:15px;
   box-shadow:0 15px 30px rgba(0,0,0,.3);
 }
-
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{text-align:center;padding:5px}
 th{background:var(--primary);color:white;border-radius:5px}
+td.evento-dia{background:var(--accent);border-radius:50%;font-weight:bold}
 
-td.evento-dia{
-  background:var(--accent);
-  border-radius:50%;
-  font-weight:bold;
-}
+#events{margin-bottom:80px}
+#videos{margin-top:80px}
 
 footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
 </style>
@@ -170,16 +196,42 @@ footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
   <p>Educador salesiano dedicado a los jóvenes y al servicio.</p>
 </section>
 
-<section id="events">
-  <h2>🎉 Eventos</h2>
-
-  <p class="hint-teclado">⬅️ ➡️ Usa las flechas del teclado para ver más eventos</p>
-
-  <div class="carousel">
-    <div class="carousel-track" id="track"></div>
+<!-- SOBRE NOSOTROS -->
+<section class="sobre">
+  <h2>👥 Sobre nosotros</h2>
+  <div class="team">
+    <div class="member"><div class="avatar">AL</div><h3>Aland Lastra</h3><p>Frontend</p></div>
+    <div class="member"><div class="avatar">JM</div><h3>Juan Méndez</h3><p>Diseño</p></div>
+    <div class="member"><div class="avatar">CR</div><h3>Camila Rojas</h3><p>Contenido</p></div>
+    <div class="member"><div class="avatar">LP</div><h3>Luis Pérez</h3><p>Soporte</p></div>
   </div>
 </section>
 
+<!-- EVENTOS -->
+<section id="events">
+  <h2>🎉 Eventos</h2>
+  <p class="hint-teclado">⬅️ ➡️ Usa las flechas del teclado o desliza en tu celular</p>
+  <div class="carousel" id="carouselEventos">
+    <div class="carousel-track" id="trackEventos"></div>
+  </div>
+</section>
+
+<!-- TEXTO ENTRE CARRUSELES -->
+<section class="separador">
+  <h2>✨ Revive nuestros mejores momentos</h2>
+  <p>Algunas actividades del Don Bosco en video.</p>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <h2>🎬 Videos</h2>
+  <p class="hint-teclado">⬅️ ➡️ Usa las flechas del teclado o desliza en tu celular</p>
+  <div class="carousel" id="carouselVideos">
+    <div class="carousel-track" id="trackVideos"></div>
+  </div>
+</section>
+
+<!-- CALENDARIOS -->
 <section class="calendarios">
   <h2>📆 Calendarios 2025 – 2026</h2>
   <div class="grid-cal" id="calendars"></div>
@@ -200,55 +252,113 @@ window.addEventListener('load',()=>{
 
 /* EVENTOS */
 const eventos=[
-   {tipo:'Educativo',titulo:'Nuevo año Escolar',fecha:'17 de mayo 2025',desc:'Inauguración del Año Lectivo 2025-2026 Bachillerato.'},
-  {tipo:'Ambiental',titulo:'Día del Medio Ambiente',fecha:'05 de junio 2025',desc:'Celebracion del Día del Medio Ambiente.'},
-  {tipo:'Educativo',titulo:'Consejo Estudiantil',fecha:'23 de junio 2025',desc:'Convocatoria a Consejo Estudiantil 2025-2026.'},
-  {tipo:'Deportivo',titulo:'Torneo Nacional',fecha:'01 de agosto 2025',desc:'Torneo Nacional de Baloncesto masculino y Femenino..'},
-  {tipo:'Educativo',titulo:'Programa de posesión',fecha:'14 de agosto 2025',desc:'Programa de posesión del comite central de padres de Familia y Consejo Estudiantil.'},
-  {tipo:'Educativo',titulo:'lucha contra la violencia sexual',fecha:'16 de agosto 2025',desc:'prevención de violencia en todas sus modalidades.'},
-  {tipo:'Educativo',titulo:'"YO LEO"',fecha:'18 de agosto 2025',desc:'programa de iniciativa del Ministerio de Educación con la finalidad de promover la lectura en el desarrollo educativo y personal.'},
-  {tipo:'Educativo',titulo:'Semana Cultural y Deportiva',fecha:'26 de agosto 2025',desc:'Feria de Ciencias de las áreas de Ciencias Naturales, Matemáticas, Computación sección Escuela, jornada Vespertina.'},
-  {tipo:'Deportivo',titulo:'Olimpiadas Deportivas 2025-2026',fecha:'10 de septiembre 2025',desc:'Inauguración de juegos deportivos Jornada Vespertina.'},
-  {tipo:'Ceremonia',titulo:'Juramento a la bandera',fecha:'28 de septiembre 2025',desc:'estudiantes de Bachillerato jornada vespertina rinden homenaje a la Bandera Nacional realizando su Juramento.'},
-  {tipo:'Religioso',titulo:'Domund',fecha:'06 de octubre 2025',desc:'Entrega de alcancías en escuela y colegio.'},
-  {tipo:'Cultural',titulo:'Identidad Montubia Ecuatoriana',fecha:'06 de octubre 2025',desc:'Día de la Identidad Montubia Ecuatoriana.'},
-  {tipo:'Religioso',titulo:'llegada del Niño Dios',fecha:'18 de diciembre 2025',desc:'preparación para la llegada del Niño Dios en Navidad.'},
-  {tipo:'Religioso',titulo:'Villancico 2025',fecha:'22 de diciembre 2025',desc:'Concurso de Villancico 2025.'},
-  {tipo:'Artistico',titulo:'presentación artística',fecha:'06 de febrero 2025',desc:'presentación artística.'}
+ {tipo:'Educativo',titulo:'Nuevo año Escolar',fecha:'17 de mayo 2025',desc:'Inauguración del Año Lectivo 2025-2026 Bachillerato.'},
+ {tipo:'Ambiental',titulo:'Día del Medio Ambiente',fecha:'05 de junio 2025',desc:'Celebracion del Día del Medio Ambiente.'},
+ {tipo:'Educativo',titulo:'Consejo Estudiantil',fecha:'23 de junio 2025',desc:'Convocatoria a Consejo Estudiantil 2025-2026.'},
+ {tipo:'Deportivo',titulo:'Torneo Nacional',fecha:'01 de agosto 2025',desc:'Torneo Nacional de Baloncesto masculino y Femenino..'},
+ {tipo:'Educativo',titulo:'Programa de posesión',fecha:'14 de agosto 2025',desc:'Programa de posesión del comite central de padres de Familia y Consejo Estudiantil.'},
+ {tipo:'Educativo',titulo:'lucha contra la violencia sexual',fecha:'16 de agosto 2025',desc:'prevención de violencia en todas sus modalidades.'},
+ {tipo:'Educativo',titulo:'"YO LEO"',fecha:'18 de agosto 2025',desc:'programa de iniciativa del Ministerio de Educación con la finalidad de promover la lectura.'},
+ {tipo:'Educativo',titulo:'Semana Cultural y Deportiva',fecha:'26 de agosto 2025',desc:'Feria de Ciencias y jornada vespertina.'},
+ {tipo:'Deportivo',titulo:'Olimpiadas Deportivas 2025-2026',fecha:'10 de septiembre 2025',desc:'Inauguración de juegos deportivos.'},
+ {tipo:'Ceremonia',titulo:'Juramento a la bandera',fecha:'28 de septiembre 2025',desc:'Juramento a la Bandera Nacional.'},
+ {tipo:'Religioso',titulo:'Domund',fecha:'06 de octubre 2025',desc:'Entrega de alcancías.'},
+ {tipo:'Cultural',titulo:'Identidad Montubia',fecha:'06 de octubre 2025',desc:'Día de la Identidad Montubia.'},
+ {tipo:'Religioso',titulo:'Llegada del Niño Dios',fecha:'18 de diciembre 2025',desc:'Preparación para Navidad.'},
+ {tipo:'Religioso',titulo:'Villancico 2025',fecha:'22 de diciembre 2025',desc:'Concurso de Villancicos.'},
+ {tipo:'Artistico',titulo:'Presentación artística',fecha:'06 de febrero 2026',desc:'Presentaciones culturales.'}
 ];
 
-const track=document.getElementById('track');
-let index=0;
+const trackEventos=document.getElementById('trackEventos');
+let indexEventos=0;
 
 eventos.forEach((e,i)=>{
-  track.innerHTML+=`
+  trackEventos.innerHTML+=`
   <div class="evento">
     <span class="badge">${e.tipo}</span>
     <h3>${e.titulo}</h3>
     <p><strong>📅 ${e.fecha}</strong></p>
     <button onclick="toggle(${i})">Ver más</button>
-    <div class="detalle" id="d${i}">
-      <p>${e.desc}</p>
-    </div>
+    <div class="detalle" id="d${i}"><p>${e.desc}</p></div>
   </div>`;
 });
 
 function toggle(i){
   document.getElementById('d'+i).classList.toggle('activo');
 }
-
-function move(d){
-  index=(index+d+eventos.length)%eventos.length;
-  track.style.transform=`translateX(-${index*100}%)`;
+function moveEventos(d){
+  indexEventos=(indexEventos+d+eventos.length)%eventos.length;
+  trackEventos.style.transform=`translateX(-${indexEventos*100}%)`;
 }
 
-/* CONTROL CON TECLADO */
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight') move(1);
-  if(e.key==='ArrowLeft') move(-1);
+/* VIDEOS FACEBOOK */
+const videosFB=[
+  'https://www.facebook.com/photo/?fbid=1224218796159984&set=pcb.1224219172826613',
+  'https://www.facebook.com/photo/?fbid=1238250641423466&set=pcb.1238250938090103',
+  'https://www.facebook.com/watch/?v=1059347369041860&rdid=i7G04wpjB23Lw39S',
+  'https://www.facebook.com/photo?fbid=1282169657031564&set=pcb.1282170003698196',
+  'https://www.facebook.com/photo?fbid=1292815055967024&set=pcb.1292873155961214',
+  'https://www.facebook.com/photo/?fbid=1294243449157518&set=pcb.1294318589150004',
+  'https://www.facebook.com/100057156261130/videos/pcb.1296387935609736/1356909389341945',
+  'https://www.facebook.com/photo?fbid=1302764078305455&set=pcb.1302768134971716',
+  'https://www.facebook.com/100057156261130/videos/pcb.1314678087114054/1219617723308074',
+  'https://www.facebook.com/100057156261130/videos/pcb.1334413305140532/1331644192003749',
+  'https://www.facebook.com/photo/?fbid=1336692004912662&set=pcb.1336698244912038',
+  'https://www.facebook.com/photo/?fbid=1336701201578409&set=pcb.1336705811577948',
+  'https://www.facebook.com/100057156261130/videos/pcb.1396991555549373/3077889965728911',
+  'https://www.facebook.com/photo/?fbid=1400174521897743&set=pcb.1400179781897217',
+  'https://www.facebook.com/uefdonbosco/videos/1240491951507025'
+];
+
+const trackVideos=document.getElementById('trackVideos');
+let indexVideos=0;
+
+videosFB.forEach(v=>{
+  const embed=`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(v)}&show_text=false&width=560`;
+  trackVideos.innerHTML+=`
+    <div class="video-card">
+      <iframe src="${embed}" allowfullscreen></iframe>
+    </div>`;
 });
 
-/* CALENDARIO */
+function moveVideos(d){
+  indexVideos=(indexVideos+d+videosFB.length)%videosFB.length;
+  trackVideos.style.transform=`translateX(-${indexVideos*100}%)`;
+}
+
+/* TECLADO PC - SE MUEVEN POR SEPARADO */
+document.addEventListener('keydown',e=>{
+  const y=window.scrollY;
+  const eventosTop=document.getElementById('carouselEventos').offsetTop;
+  const videosTop=document.getElementById('carouselVideos').offsetTop;
+
+  if(e.key==='ArrowRight'){
+    if(Math.abs(y-eventosTop)<300) moveEventos(1);
+    if(Math.abs(y-videosTop)<300) moveVideos(1);
+  }
+  if(e.key==='ArrowLeft'){
+    if(Math.abs(y-eventosTop)<300) moveEventos(-1);
+    if(Math.abs(y-videosTop)<300) moveVideos(-1);
+  }
+});
+
+/* SWIPE MOVIL */
+function swipe(el,cb){
+  let x0=null;
+  el.addEventListener('touchstart',e=>x0=e.touches[0].clientX);
+  el.addEventListener('touchend',e=>{
+    if(!x0) return;
+    let dx=e.changedTouches[0].clientX-x0;
+    if(dx>50) cb(-1);
+    if(dx<-50) cb(1);
+    x0=null;
+  });
+}
+
+swipe(document.getElementById('carouselEventos'),moveEventos);
+swipe(document.getElementById('carouselVideos'),moveVideos);
+
+/* CALENDARIO (IGUAL QUE EL TUYO) */
 const cal=document.getElementById('calendars');
 const days=['L','M','M','J','V','S','D'];
 const events={'2025-05-17':'📚','2025-06-05':'🌳','2025-06-23':'📖','2025-08-01':'🏀','2025-08-14':'','2025-08-16':'🚫','2025-08-18':'📝','2025-08-26':'🏃','2025-09-10':'⚽','2025-09-28':'🇪🇨','2025-10-06':'✉️','2025-12-18':'😇','2025-12-22':'🎄','2026-02-06':'🎸'};
