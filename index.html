@@ -22,8 +22,8 @@ body{
   scroll-behavior:smooth;
 }
 
-section{padding:50px 20px}
-h2{text-align:center;margin-bottom:30px}
+section{padding:80px 20px}
+h2{text-align:center;margin-bottom:40px;font-size:2.2rem}
 
 /* HERO */
 header{
@@ -47,7 +47,7 @@ header h1, header p, .scroll-btn{
   margin-top:30px;
   background:var(--accent);
   color:#333;
-  padding:12px 28px;
+  padding:14px 36px;
   border-radius:30px;
   text-decoration:none;
   font-weight:bold;
@@ -57,36 +57,54 @@ header h1, header p, .scroll-btn{
 .info-extra{
   text-align:center;
   background:rgba(255,255,255,.15);
+  backdrop-filter: blur(6px);
 }
 
 /* SOBRE NOSOTROS */
-.sobre{background:rgba(255,255,255,.08)}
+.sobre{
+  background:rgba(255,255,255,.08);
+  padding:100px 20px;
+}
+
 .team{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-  max-width:900px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:40px;
+  max-width:1100px;
   margin:0 auto;
 }
+
 .member{
   background:white;
   color:#333;
-  border-radius:18px;
-  padding:20px;
+  border-radius:24px;
+  padding:35px 20px;
   text-align:center;
-  box-shadow:0 15px 30px rgba(0,0,0,.25);
+  box-shadow:0 25px 50px rgba(0,0,0,.35);
+  transition:.3s ease;
 }
+
+.member:hover{ transform:translateY(-8px); }
+
 .avatar{
-  width:70px;height:70px;
+  width:140px;
+  height:140px;
   border-radius:50%;
-  background:var(--primary);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  margin:0 auto 10px;
+  object-fit:cover;
+  margin:0 auto 18px;
+  display:block;
+  border:5px solid var(--primary);
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition:.3s ease;
 }
+
+.member:hover .avatar{
+  transform:scale(1.1);
+  border-color:var(--accent);
+}
+
+.member h3{ margin:10px 0 5px; font-size:1.2rem; }
+.member p{ opacity:.85; }
 
 /* CARRUSELES */
 .carousel{
@@ -148,14 +166,10 @@ header h1, header p, .scroll-btn{
 }
 
 /* MENSAJE */
-.hint-teclado{text-align:center;margin-bottom:15px;font-size:.95rem;opacity:.85}
+.hint-teclado{text-align:center;margin-bottom:15px;font-size:1rem;opacity:.85}
 
 /* TEXTO ENTRE CARRUSELES */
-.separador{
-  padding:60px 20px;
-  text-align:center;
-  opacity:.85;
-}
+.separador{ padding:80px 20px; text-align:center; opacity:.9; }
 
 /* CALENDARIO */
 .calendarios{background:rgba(0,0,0,.25)}
@@ -172,12 +186,12 @@ header h1, header p, .scroll-btn{
   box-shadow:0 15px 30px rgba(0,0,0,.3);
 }
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:center;padding:5px}
+th,td{text-align:center;padding:6px}
 th{background:var(--primary);color:white;border-radius:5px}
 td.evento-dia{background:var(--accent);border-radius:50%;font-weight:bold}
 
-#events{margin-bottom:80px}
-#videos{margin-top:80px}
+#events{margin-bottom:100px}
+#videos{margin-top:100px}
 
 footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
 </style>
@@ -196,18 +210,28 @@ footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
   <p>Educador salesiano dedicado a los jóvenes y al servicio.</p>
 </section>
 
-<!-- SOBRE NOSOTROS -->
 <section class="sobre">
   <h2>👥 Sobre nosotros</h2>
   <div class="team">
-    <div class="member"><div class="avatar">AL</div><h3>Aland Lastra</h3><p>Creador</p></div>
-    <div class="member"><div class="avatar">VH</div><h3>Valentin Hidalgo</h3><p>Diseño</p></div>
-    <div class="member"><div class="avatar">AS</div><h3>Andres Santander</h3><p>Contenido</p></div>
-    <div class="member"><div class="avatar">JR</div><h3>Jeffry Rodriguez</h3><p>apoyo emocional</p></div>
+    <div class="member">
+      <img class="avatar" src="Aland.jpeg" onerror="this.src='https://ui-avatars.com/api/?name=Aland+Lastra&background=1976D2&color=fff'">
+      <h3>Aland Lastra</h3><p>Creador y Scripter</p>
+    </div>
+    <div class="member">
+      <img class="avatar" src="valentin.jpeg" onerror="this.src='https://ui-avatars.com/api/?name=Juan+Mendez&background=1976D2&color=fff'">
+      <h3>Valentin Hidalgo</h3><p>Diseño</p>
+    </div>
+    <div class="member">
+      <img class="avatar" src="Santander.jpeg" onerror="this.src='https://ui-avatars.com/api/?name=Camila+Rojas&background=1976D2&color=fff'">
+      <h3>Andres Santander</h3><p>Contenido</p>
+    </div>
+    <div class="member">
+      <img class="avatar" src="img/luis.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Luis+Perez&background=1976D2&color=fff'">
+      <h3>Jeffry rodriguez</h3><p>apoyo emocional</p>
+    </div>
   </div>
 </section>
 
-<!-- EVENTOS -->
 <section id="events">
   <h2>🎉 Eventos</h2>
   <p class="hint-teclado">⬅️ ➡️ Usa las flechas del teclado o desliza en tu celular</p>
@@ -216,13 +240,11 @@ footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
   </div>
 </section>
 
-<!-- TEXTO ENTRE CARRUSELES -->
 <section class="separador">
   <h2>✨ Revive nuestros mejores momentos</h2>
   <p>Algunas actividades del Don Bosco en video.</p>
 </section>
 
-<!-- VIDEOS -->
 <section id="videos">
   <h2>🎬 Videos</h2>
   <p class="hint-teclado">⬅️ ➡️ Usa las flechas del teclado o desliza en tu celular</p>
@@ -231,7 +253,6 @@ footer{text-align:center;background:rgba(0,0,0,.4);padding:20px}
   </div>
 </section>
 
-<!-- CALENDARIOS -->
 <section class="calendarios">
   <h2>📆 Calendarios 2025 – 2026</h2>
   <div class="grid-cal" id="calendars"></div>
@@ -326,7 +347,7 @@ function moveVideos(d){
   trackVideos.style.transform=`translateX(-${indexVideos*100}%)`;
 }
 
-/* TECLADO PC - SE MUEVEN POR SEPARADO */
+/* TECLADO */
 document.addEventListener('keydown',e=>{
   const y=window.scrollY;
   const eventosTop=document.getElementById('carouselEventos').offsetTop;
@@ -342,7 +363,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* SWIPE MOVIL */
+/* SWIPE */
 function swipe(el,cb){
   let x0=null;
   el.addEventListener('touchstart',e=>x0=e.touches[0].clientX);
@@ -358,7 +379,7 @@ function swipe(el,cb){
 swipe(document.getElementById('carouselEventos'),moveEventos);
 swipe(document.getElementById('carouselVideos'),moveVideos);
 
-/* CALENDARIO (IGUAL QUE EL TUYO) */
+/* CALENDARIO */
 const cal=document.getElementById('calendars');
 const days=['L','M','M','J','V','S','D'];
 const events={'2025-05-17':'📚','2025-06-05':'🌳','2025-06-23':'📖','2025-08-01':'🏀','2025-08-14':'','2025-08-16':'🚫','2025-08-18':'📝','2025-08-26':'🏃','2025-09-10':'⚽','2025-09-28':'🇪🇨','2025-10-06':'✉️','2025-12-18':'😇','2025-12-22':'🎄','2026-02-06':'🎸'};
@@ -393,5 +414,3 @@ while(start<=end){
 
 </body>
 </html>
-
-
